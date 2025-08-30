@@ -5,6 +5,7 @@ const path = require("path");
 const { v4: uuidv4 } = require('uuid');
 const methodOverride = require('method-override');
 const { title } = require("process");
+const ejsMate = require('ejs-mate');
 const Listing = require("./models/listing.js");
 
 
@@ -14,6 +15,8 @@ app.set("views", path.join(__dirname, "views"));
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
+app.engine('ejs', ejsMate);
+
 const mongoose = require('mongoose');
 
 main().then(() => { console.log("connnection made successsfully"); })
@@ -59,7 +62,7 @@ app.put("/listings/edit/:id", async(req, res) => {
     let listing = req.body.listing;
     console.log(listing);
     await Listing.findByIdAndUpdate(id, listing);
-    res.redirect(`/show/${id}`);
+    res.redirect(`/`);
 });
 //setting route for delete request
 app.delete("/listings/:id/delete", async(req, res) => {

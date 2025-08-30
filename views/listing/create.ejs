@@ -1,34 +1,37 @@
-<!DOCTYPE html>
-<html lang="en">
+<% layout("/layouts/boilerplate.ejs") %>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wanderlust</title>
-</head>
+    <body>
+        <h3>Add New Listing</h3>
+        <form action="/listings" method="post">
+            <form class="row g-3" action="/listings" method="post">
+                <div class="col-md-12">
+                    <label for="title" class="form-label">Title</label>
+                    <input type="text" class="form-control" id="title" name='listing[title]' placeholder="name">
+                </div>
+                <div class="col-md-12">
+                    <label for="description" class="form-label">Description</label>
+                    <input type="text" class="form-control" id="description" name='listing[description]' placeholder="description">
+                </div>
+                <div class="col-12">
+                    <label for="image-url" class="form-label">Image-url</label>
+                    <input type="text" class="form-control" id="image-url">
+                </div>
+                <div class="col-md-12">
+                    <label for="price" class="form-label">Price</label>
+                    <input type="text" class="form-control" id="price" name='listing[price]' placeholder="price">
+                </div>
+                <div class="col-md-6">
+                    <label for="inputCountry" class="form-label">Country</label>
+                    <input type="text" class="form-control" id="inputCountry" name='listing[country]' placeholder="country">
+                </div>
+                <div class="col-md-6">
+                    <label for="inputLocation" class="form-label">Location</label>
+                    <input type="text" class="form-control" id="inputLocation" name='listing[location]' placeholder="location">
+                </div>
+                <br>
+                <button class="btn btn-danger">Add Listing</button>
 
-<body>
-    <h3>Add New Listing</h3>
-    <form action="/listings" method="post">
-        <input type="text" name='listing[title]' placeholder="name">
-        <br>
-        <br>
-        <input type="text" name='listing[description]' placeholder="description">
-        <br>
-        <br>
-        <input type="number" name='listing[price]' placeholder="price">
-        <br>
-        <br>
-        <input type="text" name='listing[country]' placeholder="country">
-        <br>
-        <br>
-        <input type="text" name='listing[location]' placeholder="location">
-        <br>
-        <br>
-        <button>add listing</button>
+            </form>
 
-
-    </form>
-</body>
-
-</html>
+        </form>
+    </body>

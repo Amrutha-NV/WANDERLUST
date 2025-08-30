@@ -1,34 +1,36 @@
-<!DOCTYPE html>
-<html lang="en">
+<% layout("/layouts/boilerplate.ejs") %>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wanderlust</title>
-</head>
+    <body>
+        <h3>Edit Your Listing</h3>
+        <form class="row g-3" method="post" action="/listings/edit/<%= listing._id%>?_method=put">
+            <div class="col-md-12">
+                <label for="title" class="form-label">Title</label>
+                <input type="text" class="form-control" id="title" value=" <%= listing.title %>" name='listing[title]' disabled>
+            </div>
+            <div class="col-md-12">
+                <label for="description" class="form-label">Description</label>
+                <input type="text" class="form-control" id="description" value=" <%= listing.description %>" name='listing[description]'>
+            </div>
+            <div class="col-12">
+                <label for="image-url" class="form-label">Image-url</label>
+                <input type="text" class="form-control" id="image-url" value=" <%= listing.image.url %>" name='listing[image[url]]'>
+            </div>
+            <div class="col-md-12">
+                <label for="price" class="form-label">Price</label>
+                <input type="text" class="form-control" id="price" value="
+                <%= listing.price.toLocaleString('en-IN') %> " name='listing[price]'>
+            </div>
+            <div class="col-md-6">
+                <label for="inputCountry" class="form-label">Country</label>
+                <input type="text" class="form-control" id="inputCountry" value=" <%= listing.country %>" name='listing[country]'>
+            </div>
+            <div class="col-md-6">
+                <label for="inputLocation" class="form-label">Location</label>
+                <input type="text" class="form-control" id="inputLocation" value=" <%= listing.location %>" name='listing[location]'>
+            </div>
+            <div class="col-md-3">
+                <button class="btn btn-danger">edit</button>
+            </div>
 
-<body>
-    <h3>Edit Your Listing</h3>
-    <form method="post" action="/listings/edit/<%= listing._id%>?_method=put">
-        <input type="text" name='listing[title]' placeholder="name" value="<%=listing.title %>" disabled>
-        <br>
-        <br>
-        <input type="text" name='listing[description]' placeholder="description" value="<%=listing.description%>">
-        <br>
-        <br>
-        <input type="number" name='listing[price]' placeholder="price" value="<%=listing.price %>">
-        <br>
-        <br>
-        <input type="text" name='listing[country]' placeholder="country" value="<%=listing.country %>" disabled>
-        <br>
-        <br>
-        <input type="text" name='listing[location]' placeholder="location" value="<%=listing.location %>" disabled>
-        <br>
-        <br>
-        <button>edit</button>
-
-
-    </form>
-</body>
-
-</html>
+        </form>
+    </body>

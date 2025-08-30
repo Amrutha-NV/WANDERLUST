@@ -1,27 +1,27 @@
 {
-  "name": "airbnb-clone-",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Amrutha-NV/airbnb-clone-.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Amrutha-NV/airbnb-clone-/issues"
-  },
-  "homepage": "https://github.com/Amrutha-NV/airbnb-clone-#readme",
-  "dependencies": {
-    "ejs": "^3.1.10",
-    "express": "^5.1.0",
-    "method-override": "^3.0.0",
-    "mongoose": "^8.18.0",
-    "uuid": "^11.1.0"
-  }
+    "name": "airbnb-clone-",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Amrutha-NV/airbnb-clone-.git"
+    },
+    "keywords": [],
+    "author": "Amrutha N V",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/Amrutha-NV/airbnb-clone-/issues"
+    },
+    "homepage": "https://github.com/Amrutha-NV/airbnb-clone-#readme",
+    "dependencies": {
+        "ejs": "^3.1.10",
+        "express": "^5.1.0",
+        "method-override": "^3.0.0",
+        "mongoose": "^8.18.0",
+        "uuid": "^11.1.0"
+    }
 }
