@@ -1,37 +1,55 @@
 <% layout("/layouts/boilerplate.ejs") %>
 
     <body>
-        <h3>Add New Listing</h3>
-        <form action="/listings" method="post">
-            <form class="row g-3" action="/listings" method="post">
-                <div class="col-md-12">
-                    <label for="title" class="form-label">Title</label>
-                    <input type="text" class="form-control" id="title" name='listing[title]' placeholder="name">
+        <h3 style="text-align: center;">Add New Listing</h3>
+        <form class="row g-3 needs-validation" action="/listings" method="post" novalidate>
+            <div class="col-md-10 offset-1">
+                <label for="title" class="form-label">Title</label>
+                <input type="text" class="form-control" id="title" name='listing[title]' placeholder="name" required>
+                <div class="valid-feedback">
+                    Title looks good!
                 </div>
-                <div class="col-md-12">
-                    <label for="description" class="form-label">Description</label>
-                    <input type="text" class="form-control" id="description" name='listing[description]' placeholder="description">
+            </div>
+            <div class="col-md-10 offset-1">
+                <label for="description" class="form-label">Description</label>
+                <input type="text" class="form-control" id="description" name='listing[description]' placeholder="description" required>
+                <div class="invalid-feedback">
+                    Please enter a description.
                 </div>
-                <div class="col-12">
-                    <label for="image-url" class="form-label">Image-url</label>
-                    <input type="text" class="form-control" id="image-url">
-                </div>
-                <div class="col-md-12">
-                    <label for="price" class="form-label">Price</label>
-                    <input type="text" class="form-control" id="price" name='listing[price]' placeholder="price">
-                </div>
-                <div class="col-md-6">
-                    <label for="inputCountry" class="form-label">Country</label>
-                    <input type="text" class="form-control" id="inputCountry" name='listing[country]' placeholder="country">
-                </div>
-                <div class="col-md-6">
-                    <label for="inputLocation" class="form-label">Location</label>
-                    <input type="text" class="form-control" id="inputLocation" name='listing[location]' placeholder="location">
-                </div>
-                <br>
-                <button class="btn btn-danger">Add Listing</button>
+            </div>
 
-            </form>
+            <div class="col-10 offset-1">
+                <label for="image-url" class="form-label">Image-url</label>
+                <input type="text" class="form-control" id="image-url">
+            </div>
+            <div class="col-md-10 offset-1">
+                <label for="price" class="form-label">Price</label>
+                <input type="text" class="form-control" id="price" name='listing[price]' placeholder="price" required>
+                <div class="invalid-feedback">
+                    Please choose a price.
+                </div>
+            </div>
+
+            <div class="col-md-6 offset-1">
+                <label for="inputCountry" class="form-label">Country</label>
+                <input type="text" class="form-control" id="inputCountry" name='listing[country]' placeholder="country" required>
+                <div class="invalid-feedback">
+                    Please choose a country.
+                </div>
+            </div>
+
+            <div class="col-md-6 offset-1">
+                <label for="inputLocation" class="form-label">Location</label>
+                <input type="text" class="form-control" id="inputLocation" name='listing[location]' placeholder="location" required>
+                <div class="invalid-feedback">
+                    Please choose a location.
+                </div>
+            </div>
+            <br>
+            <div class="col-md-6 offset-1">
+                <button class="btn btn-danger">Add Listing</button>
+            </div>
+
 
         </form>
     </body>

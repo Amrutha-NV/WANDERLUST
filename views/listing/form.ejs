@@ -1,38 +1,36 @@
 <% layout("/layouts/boilerplate.ejs") %>
 
     <body>
-        <form class="row g-3">
-            <div class="col-md-12">
-                <label for="title" class="form-label">Title</label>
-                <input type="text" class="form-control" id="title" value=" <%= listing.title %>" disabled>
+        <div class="show-card">
+            <div class="card w-50">
+                <img src="<%=listing.image.url %>" class="card-img-top show-img" alt="listing image">
+                <div class="card-body">
+                    <h5 class="card-title fs-1">
+                        <%= listing.title %>
+                    </h5>
+                    <p class="card-text">
+                        <%= listing.description %>
+                    </p>
+                    <p class="card-text">
+                        &#8377;
+                        <%= listing.price%>
+                    </p>
+                    <p class="card-text">
+                        <%= listing.country%>
+                    </p>
+                    <p class="card-text">
+                        <%= listing.location %>
+                    </p>
+                    <div class="btns">
+                        <div class="btns-item"> <a href="/listings/<%=listing._id%>/edit"><button class="btn btn-danger">edit</button></a></div>
+                        <form method="post" action="/listings/<%=listing._id%>/delete?_method=delete" class="btns-item">
+                            <button class="btn btn-dark">delete!</button>
+                        </form>
+                    </div>
+
+                </div>
             </div>
-            <div class="col-md-12">
-                <label for="description" class="form-label">Description</label>
-                <input type="text" class="form-control" id="description" value=" <%= listing.description %>" disabled>
-            </div>
-            <div class="col-12">
-                <label for="image-url" class="form-label">Image-url</label>
-                <input type="text" class="form-control" id="image-url" value=" <%= listing.image.url %>" disabled>
-            </div>
-            <div class="col-md-12">
-                <label for="price" class="form-label">Price</label>
-                <input type="text" class="form-control" id="price" value="&#8377;
-                <%= listing.price.toLocaleString('en-IN') %> " disabled>
-            </div>
-            <div class="col-md-6">
-                <label for="inputCountry" class="form-label">Country</label>
-                <input type="text" class="form-control" id="inputCountry" value=" <%= listing.country %>" disabled>
-            </div>
-            <div class="col-md-6">
-                <label for="inputLocation" class="form-label">Location</label>
-                <input type="text" class="form-control" id="inputLocation" value=" <%= listing.location %>" disabled>
-            </div>
-        </form>
-        <div class="btns">
-            <div class="btns-item"> <a href="/listings/<%=listing._id%>/edit"><button class="btn btn-danger">edit</button></a></div>
-            <form method="post" action="/listings/<%=listing._id%>/delete?_method=delete" class="btns-item">
-                <button class="btn btn-danger">delete!</button>
-            </form>
+
         </div>
 
     </body>

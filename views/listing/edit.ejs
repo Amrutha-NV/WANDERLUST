@@ -2,34 +2,49 @@
 
     <body>
         <h3>Edit Your Listing</h3>
-        <form class="row g-3" method="post" action="/listings/edit/<%= listing._id%>?_method=put">
+        <form class="row g-3 needs-validation" method="post" action="/listings/edit/<%= listing._id%>?_method=put" novalidate>
             <div class="col-md-12">
                 <label for="title" class="form-label">Title</label>
                 <input type="text" class="form-control" id="title" value=" <%= listing.title %>" name='listing[title]' disabled>
+
             </div>
             <div class="col-md-12">
                 <label for="description" class="form-label">Description</label>
-                <input type="text" class="form-control" id="description" value=" <%= listing.description %>" name='listing[description]'>
+                <input type="text" class="form-control" id="description" value=" <%= listing.description %>" name='listing[description]' required>
+                <div class="invalid-feedback">
+                    required.
+                </div>
             </div>
             <div class="col-12">
                 <label for="image-url" class="form-label">Image-url</label>
-                <input type="text" class="form-control" id="image-url" value=" <%= listing.image.url %>" name='listing[image[url]]'>
+                <input type="text" class="form-control" id="image-url" value=" <%= listing.image.url %>" name='listing[image[url]]' required>
+                <div class="invalid-feedback">
+                    required.
+                </div>
             </div>
             <div class="col-md-12">
                 <label for="price" class="form-label">Price</label>
-                <input type="text" class="form-control" id="price" value="
-                <%= listing.price.toLocaleString('en-IN') %> " name='listing[price]'>
+                <input type="text" class="form-control" id="price" value="<%= listing.price%> " name='listing[price]' required>
+                <div class="invalid-feedback">
+                    required.
+                </div>
             </div>
             <div class="col-md-6">
                 <label for="inputCountry" class="form-label">Country</label>
-                <input type="text" class="form-control" id="inputCountry" value=" <%= listing.country %>" name='listing[country]'>
+                <input type="text" class="form-control" id="inputCountry" value=" <%= listing.country %>" name='listing[country]' required>
+                <div class="invalid-feedback">
+                    required.
+                </div>
             </div>
             <div class="col-md-6">
                 <label for="inputLocation" class="form-label">Location</label>
-                <input type="text" class="form-control" id="inputLocation" value=" <%= listing.location %>" name='listing[location]'>
+                <input type="text" class="form-control" id="inputLocation" value=" <%= listing.location %>" name='listing[location]' required>
+                <div class="invalid-feedback">
+                    required.
+                </div>
             </div>
             <div class="col-md-3">
-                <button class="btn btn-danger">edit</button>
+                <button class="btn btn-danger">Done!</button>
             </div>
 
         </form>
