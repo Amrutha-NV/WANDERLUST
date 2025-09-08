@@ -7,9 +7,11 @@ const methodOverride = require('method-override');
 const { title } = require("process");
 const ejsMate = require('ejs-mate');
 const Listing = require("./models/listing.js");
+const Review = require("./models/review.js");
 const wrapAsync = require("./utils/asyncwrap.js");
 const ExpressError = require("./utils/expresserror.js")
 const { listingSchema } = require("./schema.js");
+const { reviewSchema } = require("./schema.js");
 
 
 app.set("view engine", "ejs");
@@ -37,6 +39,14 @@ const validate = (req, res, next) => {
         next();
     }
 }
+const reviewvalidate = (req, res, next) => {
+    const { error } = reviewSchema.validate(req.body);
+    if (error) {
+        throw new ExpressError(400, error);
+    } else {
+        next();
+    }
+}
 
 //setting index route
 app.get("/", wrapAsync(async(req, res) => {
@@ -58,7 +68,7 @@ app.post('/listings', validate, wrapAsync(async(req, res) => {
 //setting route to view indivisual listing
 app.get("/show/:id", wrapAsync(async(req, res) => {
     let { id } = req.params;
-    let listing = await Listing.findById(id);
+    let listing = await Listing.findById(id).populate('reviews');
     res.render('./listing/form.ejs', { listing });
 }));
 //setting the route for edit request
@@ -84,6 +94,24 @@ app.delete("/listings/:id/delete", wrapAsync(async(req, res) => {
     await Listing.findByIdAndDelete(id);
     res.redirect("/");
 }));
+// review model
+// handling post request from reviews
+app.post("/listings/:id/reviews", reviewvalidate, wrapAsync(async(req, res) => {
+    let { id } = req.params;
+    let listing = await Listing.findById(id);
+    let newreview = new Review(req.body.review);
+    listing.reviews.push(newreview._id);
+    await newreview.save();
+    await listing.save();
+    res.redirect(`/show/${id}`);
+}));
+// handling delete request
+app.delete("/listings/:id/reviews/:reviewid/delete", wrapAsync(async(req, res) => {
+    let { id, reviewid } = req.params;
+    await Listing.findByIdAndUpdate(id, { $pull: { reviews: reviewid } });
+    await Review.findByIdAndDelete(reviewid);
+    res.redirect(`/show/${id}`);
+}))
 
 // page not found using express error handling
 app.all('*id', (req, res, next) => {

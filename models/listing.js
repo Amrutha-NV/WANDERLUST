@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const Review = require("./review.js");
 main().then(() => { console.log("connnection made successsfully"); })
     .catch(err => console.log(err));
 
@@ -33,7 +34,19 @@ const listingSchema = new mongoose.Schema({
     },
     country: {
         type: String,
-    }
-})
+    },
+    reviews: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Review",
+    }, ],
+});
+//post mongoose middleware triggered when findbyidanddelete is triggered for listing post that action this middleware is activated
+
+listingSchema.post("findOneAndDelete", async(listing) => {
+    if (listing) {
+        await Review.deleteMany({ _id: { $in: listing.reviews } })
+    };
+
+});
 const Listing = mongoose.model("Listing", listingSchema);
 module.exports = Listing;
