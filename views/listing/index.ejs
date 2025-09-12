@@ -4,7 +4,7 @@
         <div class="row justify-content-center g-4">
             <%  for(let listing of allListing){ %>
                 <div class="col-md-4 col-sm-6 offset-0.5">
-                    <a href="/show/<%= listing._id %>" class="index-listing">
+                    <a href="listings/show/<%= listing._id %>" class="index-listing">
                         <div class="card">
                             <img src="<%=listing.image.url %>" class="card-img-top img-fluid" alt="Listing-image">
                             <div class="card-img-overlay"></div>

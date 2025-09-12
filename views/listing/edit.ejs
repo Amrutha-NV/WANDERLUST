@@ -5,7 +5,7 @@
         <form class="row g-3 needs-validation" method="post" action="/listings/edit/<%= listing._id%>?_method=put" novalidate>
             <div class="col-md-12">
                 <label for="title" class="form-label">Title</label>
-                <input type="text" class="form-control" id="title" value=" <%= listing.title %>" name='listing[title]' disabled>
+                <input type="text" class="form-control" id="title" value=" <%= listing.title %>" name='listing[title]' required>
 
             </div>
             <div class="col-md-12">
@@ -17,10 +17,8 @@
             </div>
             <div class="col-12">
                 <label for="image-url" class="form-label">Image-url</label>
-                <input type="text" class="form-control" id="image-url" value=" <%= listing.image.url %>" name='listing[image[url]]' required>
-                <div class="invalid-feedback">
-                    required.
-                </div>
+                <input type="text" class="form-control" id="image-url" value=" <%= listing.image.url %>" name='listing[[image][url]]'>
+
             </div>
             <div class="col-md-12">
                 <label for="price" class="form-label">Price</label>

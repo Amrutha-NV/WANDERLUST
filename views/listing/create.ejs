@@ -2,7 +2,7 @@
 
     <body>
         <h3 style="text-align: center;">Add New Listing</h3>
-        <form class="row g-3 needs-validation" action="/listings" method="post" novalidate>
+        <form class="row g-3 needs-validation" action="/listings/add" method="post" novalidate>
             <div class="col-md-10 offset-1">
                 <label for="title" class="form-label">Title</label>
                 <input type="text" class="form-control" id="title" name='listing[title]' placeholder="name" required>
@@ -47,7 +47,7 @@
             </div>
             <br>
             <div class="col-md-6 offset-1">
-                <button class="btn btn-danger">Add Listing</button>
+                <button class="btn btn-danger" type="submit">Add Listing</button>
             </div>
 
 
