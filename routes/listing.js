@@ -37,6 +37,7 @@ router.post('/add', validate, wrapAsync(async(req, res) => {
     let listing = req.body.listing;
     const addListing = new Listing(listing);
     await addListing.save();
+    req.flash("success", "New listing Added");
     res.redirect('/listings');
 
 }));
@@ -44,12 +45,20 @@ router.post('/add', validate, wrapAsync(async(req, res) => {
 router.get("/show/:id", wrapAsync(async(req, res) => {
     let { id } = req.params;
     let listing = await Listing.findById(id).populate('reviews');
+    if (!listing) {
+        req.flash("error", "the listing you are trying to find does not exist");
+        return res.redirect("/listings");
+    }
     res.render('./listing/form.ejs', { listing });
 }));
 //setting the route for edit request
 router.get("/:id/edit", wrapAsync(async(req, res) => {
     let { id } = req.params;
     let listing = await Listing.findById(id);
+    if (!listing) {
+        req.flash("error", "the listing you are trying to find does not exist or as been deleted! ");
+        return res.redirect("/listings");
+    }
     res.render('./listing/edit.ejs', { listing })
 }));
 //upadting the edit request into database
@@ -59,14 +68,19 @@ router.put("/edit/:id", validate, wrapAsync(async(req, res, next) => {
     }
     let { id } = req.params;
     let listing = req.body.listing;
-    console.log(listing);
+    if (!listing) {
+        req.flash("error", "the listing you are trying to find does not exist or as been deleted! ");
+        return res.redirect("/listings");
+    }
     await Listing.findByIdAndUpdate(id, listing);
+    req.flash("success", "listing has been edited successfully");
     res.redirect(`/listings`);
 }));
 //setting route for delete request
 router.delete("/:id/delete", wrapAsync(async(req, res) => {
     let { id } = req.params;
     await Listing.findByIdAndDelete(id);
+    req.flash("success", "listing has been deleted");
     res.redirect("/listings");
 }));
 module.exports = router;
