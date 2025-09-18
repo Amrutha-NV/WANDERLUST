@@ -10,6 +10,15 @@
                 <a class="nav-link" href="/listings"><button type="button" class="btn btn-danger">All Listing</button></a>
                 <a class="nav-link" href="/listings/create"><button type="button" class="btn btn-danger">Add New Listing</button></a>
             </div>
+            <div class="navbar-nav ms-auto">
+                <%if(! curruser){%>
+                <a class="nav-link active" aria-current="page" href="/signup"><button type="button" class="btn btn-danger">SignUp</button></a>
+                <a class="nav-link" href="/login"><button type="button" class="btn btn-danger">Login</button></a>
+                <%}%>
+                 <%if(curruser){%>
+                <a class="nav-link" href="/logout"><button type="button" class="btn btn-danger">Logout</button></a>
+                 <%}%>
+            </div>
         </div>
     </div>
 </nav>

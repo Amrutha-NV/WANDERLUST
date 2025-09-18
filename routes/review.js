@@ -5,6 +5,7 @@ const Review = require("../models/review.js");
 const wrapAsync = require("../utils/asyncwrap.js");
 const ExpressError = require("../utils/expresserror.js")
 const { listingSchema, reviewSchema } = require("../schema.js");
+const { checkUserloggedIn, isOwner, isAuthor } = require("../middelware.js");
 
 const reviewvalidate = (req, res, next) => {
     const { error } = reviewSchema.validate(req.body);
@@ -17,10 +18,12 @@ const reviewvalidate = (req, res, next) => {
 
 // review model
 // handling post request from reviews
-router.post("/", reviewvalidate, wrapAsync(async(req, res) => {
+router.post("/", checkUserloggedIn, reviewvalidate, wrapAsync(async(req, res) => {
     let { id } = req.params;
     let listing = await Listing.findById(id);
     let newreview = new Review(req.body.review);
+    newreview.author = req.user._id;
+    console.log(newreview);
     listing.reviews.push(newreview._id);
     await newreview.save();
     await listing.save();
@@ -28,13 +31,13 @@ router.post("/", reviewvalidate, wrapAsync(async(req, res) => {
     res.redirect(`/listings/show/${id}`);
 }));
 // handling delete request
-router.delete("/:reviewid/delete", wrapAsync(async(req, res) => {
+router.delete("/:reviewid/delete", checkUserloggedIn, isAuthor, wrapAsync(async(req, res) => {
     let { id, reviewid } = req.params;
     console.log(id);
     console.log(reviewid);
     await Listing.findByIdAndUpdate(id, { $pull: { reviews: reviewid } });
     await Review.findByIdAndDelete(reviewid);
     req.flash("success", "review deleted successfully");
-    res.redirect(`/listings/show/${id}`);
+    res.redirect(`/listings`);
 }));
 module.exports = router;

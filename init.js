@@ -7,7 +7,7 @@ main().then(() => { console.log("connnection made successsfully"); })
 async function main() {
     await mongoose.connect('mongodb://127.0.0.1:27017/wanderlust');
 }
-const sampleListings = [{
+let sampleListings = [{
         title: "Cozy Beachfront Cottage",
         description: "Escape to this charming beachfront cottage for a relaxing getaway. Enjoy stunning ocean views and easy access to the beach.",
         image: {
@@ -332,7 +332,9 @@ let initdb = async() => {
     await Listing.deleteMany({})
         .then(() => { console.log("database is clean"); })
         .catch((err) => { console.log(err); });
-    await Listing.insertMany(sampleListings)
+        let listing_owner=sampleListings.map(sampleListings=>({...sampleListings,owner:'68cad3ef5b6de241ad63948a'}));
+    await Listing.insertMany(listing_owner)
+    
         .then(() => { console.log("data added to database") })
         .catch((err) => { console.log(err) });
 }

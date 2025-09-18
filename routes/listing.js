@@ -10,6 +10,7 @@ const Review = require("../models/review.js");
 const wrapAsync = require("../utils/asyncwrap.js");
 const ExpressError = require("../utils/expresserror.js")
 const { listingSchema, reviewSchema } = require("../schema.js");
+const { checkUserloggedIn, isOwner } = require("../middelware.js");
 
 router.use(express.urlencoded({ extended: true }));
 
@@ -29,13 +30,14 @@ router.get("/", wrapAsync(async(req, res) => {
     res.render("./listing/index.ejs", { allListing });
 }));
 //setting up the route to render a new form to add listing
-router.get("/create", (req, res) => {
+router.get("/create", checkUserloggedIn, (req, res) => {
     res.render("./listing/create.ejs");
 });
 //handling post request to add new listings to database
 router.post('/add', validate, wrapAsync(async(req, res) => {
     let listing = req.body.listing;
     const addListing = new Listing(listing);
+    addListing.owner = req.user._id;
     await addListing.save();
     req.flash("success", "New listing Added");
     res.redirect('/listings');
@@ -44,7 +46,12 @@ router.post('/add', validate, wrapAsync(async(req, res) => {
 //setting route to view indivisual listing
 router.get("/show/:id", wrapAsync(async(req, res) => {
     let { id } = req.params;
-    let listing = await Listing.findById(id).populate('reviews');
+    let listing = await Listing.findById(id)
+        .populate({
+            path: 'reviews',
+            populate: { path: "author", },
+        })
+        .populate('owner');
     if (!listing) {
         req.flash("error", "the listing you are trying to find does not exist");
         return res.redirect("/listings");
@@ -52,7 +59,7 @@ router.get("/show/:id", wrapAsync(async(req, res) => {
     res.render('./listing/form.ejs', { listing });
 }));
 //setting the route for edit request
-router.get("/:id/edit", wrapAsync(async(req, res) => {
+router.get("/:id/edit", isOwner, checkUserloggedIn, wrapAsync(async(req, res) => {
     let { id } = req.params;
     let listing = await Listing.findById(id);
     if (!listing) {
@@ -62,7 +69,7 @@ router.get("/:id/edit", wrapAsync(async(req, res) => {
     res.render('./listing/edit.ejs', { listing })
 }));
 //upadting the edit request into database
-router.put("/edit/:id", validate, wrapAsync(async(req, res, next) => {
+router.put("/edit/:id", isOwner, validate, wrapAsync(async(req, res, next) => {
     if (!req.body.listing) {
         next(new ExpressError(400, "Required information missing!"));
     }
@@ -77,7 +84,7 @@ router.put("/edit/:id", validate, wrapAsync(async(req, res, next) => {
     res.redirect(`/listings`);
 }));
 //setting route for delete request
-router.delete("/:id/delete", wrapAsync(async(req, res) => {
+router.delete("/:id/delete", isOwner, checkUserloggedIn, wrapAsync(async(req, res) => {
     let { id } = req.params;
     await Listing.findByIdAndDelete(id);
     req.flash("success", "listing has been deleted");

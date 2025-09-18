@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Review = require("./review.js");
+const User=require("./user.js");
 main().then(() => { console.log("connnection made successsfully"); })
     .catch(err => console.log(err));
 
@@ -39,6 +40,10 @@ const listingSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "Review",
     }, ],
+    owner:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"User",
+    }
 });
 //post mongoose middleware triggered when findbyidanddelete is triggered for listing post that action this middleware is activated
 
