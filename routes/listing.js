@@ -11,6 +11,7 @@ const wrapAsync = require("../utils/asyncwrap.js");
 const ExpressError = require("../utils/expresserror.js")
 const { listingSchema, reviewSchema } = require("../schema.js");
 const { checkUserloggedIn, isOwner } = require("../middelware.js");
+const listingcontroller = require("../controller/listing.js");
 
 router.use(express.urlencoded({ extended: true }));
 
@@ -25,69 +26,20 @@ const validate = (req, res, next) => {
 };
 
 //setting index route
-router.get("/", wrapAsync(async(req, res) => {
-    const allListing = await Listing.find({});
-    res.render("./listing/index.ejs", { allListing });
-}));
+router.get("/", wrapAsync(listingcontroller.index));
+
 //setting up the route to render a new form to add listing
 router.get("/create", checkUserloggedIn, (req, res) => {
     res.render("./listing/create.ejs");
 });
 //handling post request to add new listings to database
-router.post('/add', validate, wrapAsync(async(req, res) => {
-    let listing = req.body.listing;
-    const addListing = new Listing(listing);
-    addListing.owner = req.user._id;
-    await addListing.save();
-    req.flash("success", "New listing Added");
-    res.redirect('/listings');
-
-}));
+router.post('/add', validate, wrapAsync(listingcontroller.newlistingadd));
 //setting route to view indivisual listing
-router.get("/show/:id", wrapAsync(async(req, res) => {
-    let { id } = req.params;
-    let listing = await Listing.findById(id)
-        .populate({
-            path: 'reviews',
-            populate: { path: "author", },
-        })
-        .populate('owner');
-    if (!listing) {
-        req.flash("error", "the listing you are trying to find does not exist");
-        return res.redirect("/listings");
-    }
-    res.render('./listing/form.ejs', { listing });
-}));
+router.get("/show/:id", wrapAsync(listingcontroller.viewIndivisualListing));
 //setting the route for edit request
-router.get("/:id/edit", isOwner, checkUserloggedIn, wrapAsync(async(req, res) => {
-    let { id } = req.params;
-    let listing = await Listing.findById(id);
-    if (!listing) {
-        req.flash("error", "the listing you are trying to find does not exist or as been deleted! ");
-        return res.redirect("/listings");
-    }
-    res.render('./listing/edit.ejs', { listing })
-}));
+router.get("/:id/edit", isOwner, checkUserloggedIn, wrapAsync(listingcontroller.editForm));
 //upadting the edit request into database
-router.put("/edit/:id", isOwner, validate, wrapAsync(async(req, res, next) => {
-    if (!req.body.listing) {
-        next(new ExpressError(400, "Required information missing!"));
-    }
-    let { id } = req.params;
-    let listing = req.body.listing;
-    if (!listing) {
-        req.flash("error", "the listing you are trying to find does not exist or as been deleted! ");
-        return res.redirect("/listings");
-    }
-    await Listing.findByIdAndUpdate(id, listing);
-    req.flash("success", "listing has been edited successfully");
-    res.redirect(`/listings`);
-}));
+router.put("/edit/:id", isOwner, validate, wrapAsync(listingcontroller.upadteEidtForm));
 //setting route for delete request
-router.delete("/:id/delete", isOwner, checkUserloggedIn, wrapAsync(async(req, res) => {
-    let { id } = req.params;
-    await Listing.findByIdAndDelete(id);
-    req.flash("success", "listing has been deleted");
-    res.redirect("/listings");
-}));
+router.delete("/:id/delete", isOwner, checkUserloggedIn, wrapAsync(listingcontroller.destroy));
 module.exports = router;
