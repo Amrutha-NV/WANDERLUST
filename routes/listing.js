@@ -12,6 +12,9 @@ const ExpressError = require("../utils/expresserror.js")
 const { listingSchema, reviewSchema } = require("../schema.js");
 const { checkUserloggedIn, isOwner } = require("../middelware.js");
 const listingcontroller = require("../controller/listing.js");
+const multer = require('multer');
+const { storage } = require("../cloudconfig.js");
+const upload = multer({ storage: storage });
 
 router.use(express.urlencoded({ extended: true }));
 
@@ -33,7 +36,8 @@ router.get("/create", checkUserloggedIn, (req, res) => {
     res.render("./listing/create.ejs");
 });
 //handling post request to add new listings to database
-router.post('/add', validate, wrapAsync(listingcontroller.newlistingadd));
+router.post('/add', upload.single('listingimage'), validate, wrapAsync(listingcontroller.newlistingadd));
+
 //setting route to view indivisual listing
 router.get("/show/:id", wrapAsync(listingcontroller.viewIndivisualListing));
 //setting the route for edit request

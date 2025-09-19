@@ -6,10 +6,15 @@ module.exports.index = async(req, res) => {
 
 
 module.exports.newlistingadd = async(req, res) => {
+    let url = req.file.path;
+    let filename = req.file.filename;
     let listing = req.body.listing;
     const addListing = new Listing(listing);
     addListing.owner = req.user._id;
+    addListing.image = { filename, url };
+    console.log(addListing);
     await addListing.save();
+
     req.flash("success", "New listing Added");
     res.redirect('/listings');
 

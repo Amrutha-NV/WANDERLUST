@@ -2,7 +2,7 @@
 
     <body>
         <h3 style="text-align: center;">Add New Listing</h3>
-        <form class="row g-3 needs-validation" action="/listings/add" method="post" novalidate>
+        <form class="row g-3 needs-validation" action="/listings/add" method="post" novalidate enctype="multipart/form-data">
             <div class="col-md-10 offset-1">
                 <label for="title" class="form-label">Title</label>
                 <input type="text" class="form-control" id="title" name='listing[title]' placeholder="name" required>
@@ -19,8 +19,8 @@
             </div>
 
             <div class="col-10 offset-1">
-                <label for="image-url" class="form-label">Image-url</label>
-                <input type="text" class="form-control" id="image-url">
+                <label for="image-url" class="form-label">Upload image for the listing</label>
+                <input type="file" class="form-control" id="image-url" name=listingimage>
             </div>
             <div class="col-md-10 offset-1">
                 <label for="price" class="form-label">Price</label>

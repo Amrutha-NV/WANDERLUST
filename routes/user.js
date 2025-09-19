@@ -6,16 +6,20 @@ const passport = require("passport");
 const { originalurl } = require("../middelware.js");
 const usercontroller = require("../controller/user.js");
 
+// signup routes
+router.route('/signup')
+    .get((req, res, next) => {
+        res.render('./user/signup.ejs');
+    })
+    .post(wrapAsync(usercontroller.signup));
 
-router.get('/signup', (req, res, next) => {
-    res.render('./user/signup.ejs');
-});
-router.post("/signup", wrapAsync(usercontroller.signup));
-
-router.get('/login', (req, res, next) => {
-    res.render('./user/login.ejs');
-});
-router.post('/login', originalurl, passport.authenticate('local', { failureRedirect: '/login', failureFlash: true }), wrapAsync(usercontroller.login));
+//login routes
+router.route('/login')
+    .get((req, res, next) => {
+        res.render('./user/login.ejs');
+    })
+    .post(originalurl, passport.authenticate('local', { failureRedirect: '/login', failureFlash: true }), wrapAsync(usercontroller.login));
+//logout routes
 router.get('/logout', (req, res) => {
     req.logout(function(err) {
         if (err) { return next(err); }
