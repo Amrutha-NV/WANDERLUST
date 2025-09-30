@@ -43,7 +43,7 @@ router.get("/show/:id", wrapAsync(listingcontroller.viewIndivisualListing));
 //setting the route for edit request
 router.get("/:id/edit", isOwner, checkUserloggedIn, wrapAsync(listingcontroller.editForm));
 //upadting the edit request into database
-router.put("/edit/:id", isOwner, validate, wrapAsync(listingcontroller.upadteEidtForm));
+router.put("/edit/:id", isOwner, upload.single('listing[image]'), validate, wrapAsync(listingcontroller.upadteEidtForm));
 //setting route for delete request
 router.delete("/:id/delete", isOwner, checkUserloggedIn, wrapAsync(listingcontroller.destroy));
 module.exports = router;

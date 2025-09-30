@@ -40,13 +40,16 @@ module.exports.viewIndivisualListing = async(req, res) => {
 module.exports.editForm = async(req, res) => {
     let { id } = req.params;
     let listing = await Listing.findById(id);
+    let listingUrl=listing.image.url;
+   
     if (!listing) {
         req.flash("error", "the listing you are trying to find does not exist or as been deleted! ");
         return res.redirect("/listings");
     }
-    res.render('./listing/edit.ejs', { listing })
+     listingUrl = listingUrl.replace("/upload", "/upload/w_250");
+    res.render('./listing/edit.ejs', { listing, listingUrl });
+   
 }
-
 
 module.exports.upadteEidtForm = async(req, res, next) => {
     if (!req.body.listing) {
@@ -58,7 +61,15 @@ module.exports.upadteEidtForm = async(req, res, next) => {
         req.flash("error", "the listing you are trying to find does not exist or as been deleted! ");
         return res.redirect("/listings");
     }
-    await Listing.findByIdAndUpdate(id, listing);
+    let updatedlisting = await Listing.findByIdAndUpdate(id, listing);
+    if (typeof req.file !== "undefined") {
+        let url = req.file.path;
+        let filename = req.file.filename;
+        updatedlisting.image = { filename, url };
+        await updatedlisting.save();
+    }
+
+
     req.flash("success", "listing has been edited successfully");
     res.redirect(`/listings`);
 }

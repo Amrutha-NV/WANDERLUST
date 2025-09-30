@@ -1,8 +1,9 @@
 <% layout("/layouts/boilerplate.ejs") %>
 
     <body>
+    <div class="edit" style="margin-left:10px">
         <h3>Edit Your Listing</h3>
-        <form class="row g-3 needs-validation" method="post" action="/listings/edit/<%= listing._id%>?_method=put" novalidate>
+        <form class="row g-3 needs-validation" method="post" action="/listings/edit/<%= listing._id%>?_method=put" novalidate enctype="multipart/form-data">
             <div class="col-md-12">
                 <label for="title" class="form-label">Title</label>
                 <input type="text" class="form-control" id="title" value=" <%= listing.title %>" name='listing[title]' required>
@@ -15,9 +16,14 @@
                     required.
                 </div>
             </div>
+            <div>
+                original listing Image
+                <br>
+                <img src="<%=listingUrl%>" alt="listing image">
+            </div>
             <div class="col-12">
-                <label for="image-url" class="form-label">Image-url</label>
-                <input type="text" class="form-control" id="image-url" value=" <%= listing.image.url %>" name='listing[[image][url]]'>
+                <label for="image-url" class="form-label">Listing Image</label>
+                <input type="file" class="form-control" id="image-url" name='listing[image]'>
 
             </div>
             <div class="col-md-12">
@@ -46,4 +52,5 @@
             </div>
 
         </form>
+    </div>
     </body>
