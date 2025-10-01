@@ -132,3 +132,16 @@ body {
 .delete-btn {
     margin-bottom: 1rem;
 }
+
+
+/* maps */
+.map-container{
+    height:max-content;
+    width:100%;
+}
+
+#map{
+    height:40vh;
+    width:100%;
+    min-height:300px;
+}

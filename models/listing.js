@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Review = require("./review.js");
-const User=require("./user.js");
+const User = require("./user.js");
+const { number, required } = require('joi');
 main().then(() => { console.log("connnection made successsfully"); })
     .catch(err => console.log(err));
 
@@ -40,11 +41,16 @@ const listingSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "Review",
     }, ],
-    owner:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:"User",
+    owner: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+    },
+    coordinates: {
+        type: { type: String, enum: ['Point'], required: true },
+        coordinates: { type: [Number], required: true },
     }
 });
+listingSchema.index({ coordinates: "2dsphere" });
 //post mongoose middleware triggered when findbyidanddelete is triggered for listing post that action this middleware is activated
 
 listingSchema.post("findOneAndDelete", async(listing) => {
