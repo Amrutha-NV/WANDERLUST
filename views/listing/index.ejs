@@ -2,6 +2,139 @@
 
 
     <body>
+        <style>
+            .filters-container {
+                display: flex;
+                flex-wrap: wrap;
+                margin-left: 2rem;
+                align-items: center;
+                height: max-content;
+                width: 100%;
+            }
+            
+            .filter-container-2 {
+                display: flex;
+                flex-wrap: wrap;
+            }
+            
+            .filter {
+                margin-top: 2rem;
+                margin-right: 2rem;
+                text-align: center;
+                opacity: 0.7;
+                font-size: 0.7rem;
+            }
+            
+            .filter:hover {
+                opacity: 1;
+                cursor: pointer;
+            }
+            
+            .tax-info {
+                border: 2px solid black;
+                border-radius: 25px;
+                height: 2rem;
+                width: 10rem;
+                margin: 2rem;
+                padding: 1rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            
+            .tax-info-text {
+                display: none;
+            }
+            
+            #moreFilters {
+                z-index: 1050;
+                position: relative;
+            }
+        </style>
+        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+            <div class="container-fluid">
+
+                <button class="navbar-toggler btn btn-danger" type="button" data-bs-toggle="collapse" data-bs-target="#moreFilters" aria-controls="moreFilters" aria-expanded="false" aria-label="Toggle navigation">
+      <span  >Filters</span>
+                </button>
+                <div class="collapse navbar-collapse  bg-light" id="moreFilters">
+                    <div class="filter">
+                        <div><i class="fa-solid fa-fire"></i></div>
+                        <p>Trending</p>
+                    </div>
+                    <div class="filter">
+                        <div><i class="fa-solid fa-hashtag"></i></div>
+                        <p>Taxes</p>
+                    </div>
+                    <div class="filter">
+                        <div><i class="fa-solid fa-dog"></i></div>
+                        <p>Pet-Friendly</p>
+                    </div>
+                    <div class="filter">
+                        <div><i class="fa-solid fa-utensils"></i></div>
+                        <p>Restaurants</p>
+                    </div>
+                    <div class="filter">
+                        <div><i class="fa-solid fa-city"></i></div>
+                        <p>City-centered</p>
+                    </div>
+
+                    <div class="filter">
+                        <div><i class="fa-solid fa-cow "></i></div>
+                        <p>Farm</p>
+                    </div>
+                    <div class="filter">
+                        <div><i class="fa-solid fa-champagne-glasses "></i></div>
+                        <p>party</p>
+                    </div>
+
+                    <div class="filter">
+                        <div><i class="fa-solid fa-person-swimming "></i></div>
+                        <p>Pools</p>
+                    </div>
+                    <div class="filter">
+                        <div><i class="fa-solid fa-mountain "></i></div>
+                        <p>mountain</p>
+                    </div>
+                    <div class="filter">
+                        <div><i class="fa-solid fa-snowflake "></i></div>
+                        <p>Snow</p>
+                    </div>
+                    <div class="filter">
+                        <div><i class="fa-brands fa-pinterest "></i></div>
+                        <p>pintresty</p>
+                    </div>
+                    <div class="filter">
+                        <div><i class="fa-solid fa-bed "></i></div>
+                        <p>Rooms</p>
+                    </div>
+                    <div class="filter">
+                        <div><i class="fa-solid fa-umbrella-beach "></i></div>
+                        <p>Beaches</p>
+                    </div>
+                    <div class=" tax-info ">
+                        <div class="form-check form-switch form-check-reverse ">
+                            <input class="form-check-input" type="checkbox" id="switchCheckReverse">
+                            <label class="form-check-label" for="switchCheckReverse">Tax-info</label>
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+        </nav>
+
+
+
+        </div>
+
+
+
         <div class="row justify-content-center g-4">
             <%  for(let listing of allListing){ %>
                 <div class="col-md-4 col-sm-6 offset-0.5">
@@ -14,7 +147,7 @@
                                     <%= listing.title %>
                                 </h5>
                                 <p class="card-text"> &#8377;
-                                    <%=listing.price %>/Per Night.</p>
+                                    <%=listing.price %>/Per Night.<i class="tax-info-text">&nbsp;&nbsp;+18% GST</i></p>
                             </div>
                         </div>
                     </a>
@@ -23,5 +156,20 @@
                 <%  } %>
 
         </div>
+        <script>
+            let btn = document.getElementById("switchCheckReverse");
+            btn.addEventListener("click", () => {
+                let tax = document.getElementsByClassName("tax-info-text");
+                for (text of tax) {
+                    if (text.style.display != "inline") {
+                        text.style.display = "inline"
+                    } else {
+                        text.style.display = "none"
+                    }
+
+
+                }
+            })
+        </script>
 
     </body>

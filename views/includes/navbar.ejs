@@ -4,20 +4,37 @@
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="collapse navbar-collapse bg-white" id="navbarNavAltMarkup">
             <div class="navbar-nav">
-                <a class="nav-link active" aria-current="page" href="/"><button type="button" class="btn btn-danger">Home</button></a>
-                <a class="nav-link" href="/listings"><button type="button" class="btn btn-danger">All Listing</button></a>
-                <a class="nav-link" href="/listings/create"><button type="button" class="btn btn-danger">Add New Listing</button></a>
+                <a class="nav-link" href="/listings"><button type="button" class="btn btn-danger">Explore</button></a>
+
+            </div>
+            <style>
+                .search {
+                    border-radius: 25px;
+                }
+                
+                .search-icon {
+                    display: inline;
+                    margin-right: 0.4rem;
+                }
+            </style>
+
+            <div class=" navbar-nav ms-auto">
+                <form class="d-flex" role="search">
+                    <input class="form-control me-2 search" type="search" placeholder="Search Destinations" aria-label="Search" />
+                    <button class="btn btn-danger search" type="submit"><i class="fa-solid fa-magnifying-glass search-icon"></i>Search</button>
+                </form>
             </div>
             <div class="navbar-nav ms-auto">
+                <a class="nav-link" href="/listings/create"><button type="button" class="btn btn-danger">Air-Bnb-your-home</button></a>
                 <%if(! curruser){%>
-                <a class="nav-link active" aria-current="page" href="/signup"><button type="button" class="btn btn-danger">SignUp</button></a>
-                <a class="nav-link" href="/login"><button type="button" class="btn btn-danger">Login</button></a>
-                <%}%>
-                 <%if(curruser){%>
-                <a class="nav-link" href="/logout"><button type="button" class="btn btn-danger">Logout</button></a>
-                 <%}%>
+                    <a class="nav-link active" aria-current="page" href="/signup"><button type="button" class="btn btn-danger">SignUp</button></a>
+                    <a class="nav-link" href="/login"><button type="button" class="btn btn-danger">Login</button></a>
+                    <%}%>
+                        <%if(curruser){%>
+                            <a class="nav-link" href="/logout"><button type="button" class="btn btn-danger">Logout</button></a>
+                            <%}%>
             </div>
         </div>
     </div>

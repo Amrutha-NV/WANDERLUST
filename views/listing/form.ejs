@@ -48,7 +48,7 @@
                     </div>
                     <script>
                         const OPENCAGE_API_KEY = "<%=process.env.OPENCAGE_API_KEY%>";
-                        const coordinates = <%- JSON.stringify (listing&&listing.coordinates?listing.coordinates.coordinates:[]||{})%>;
+                        const coordinates = <%- JSON.stringify (listing.coordinates.coordinates||{})%>;
                     </script>
                     <hr>
                     <% } %>

@@ -135,13 +135,26 @@ body {
 
 
 /* maps */
-.map-container{
-    height:max-content;
-    width:100%;
+
+.map-container {
+    height: max-content;
+    width: 100%;
 }
 
-#map{
-    height:40vh;
-    width:100%;
-    min-height:300px;
+#map {
+    height: 40vh;
+    width: 100%;
+    min-height: 300px;
+}
+
+
+/* nav-bar styling */
+
+.search {
+    border-radius: 25px;
+}
+
+.search-icon {
+    display: inline;
+    margin-right: 0.4rem;
 }
