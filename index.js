@@ -16,6 +16,7 @@ const listings = require('./routes/listing.js');
 const reviewrouter = require('./routes/review.js');
 const userrouter = require('./routes/user.js');
 const session = require("express-session");
+const MongoStore = require('connect-mongo');
 const flash = require("connect-flash");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
@@ -32,6 +33,7 @@ app.engine('ejs', ejsMate);
 app.use(express.json());
 
 const mongoose = require('mongoose');
+const dburl = process.env.ATLASDB_URL;
 
 
 
@@ -39,10 +41,20 @@ main().then(() => { console.log("connnection to database made successsfully"); }
     .catch(err => console.log(err));
 
 async function main() {
-    await mongoose.connect('mongodb://127.0.0.1:27017/wanderlust');
+    await mongoose.connect(dburl);
 }
+
+const store = MongoStore.create({
+    mongoUrl: dburl,
+    crypto: { secret: process.env.SECRET, },
+    touchAfter: 24 * 3600,
+});
+store.on("error", () => {
+    console.log("error in mongo session store", err);
+});
 const sessionOptions = {
-    secret: "supersecrete",
+    store,
+    secret: process.env.SECRET,
     resave: false,
     saveUninitialized: true,
     cookie: {

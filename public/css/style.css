@@ -124,7 +124,7 @@ body {
 /* review styling */
 
 .review-card {
-    height: 12rem;
+    height: max-content;
     width: 20rem;
     border-radius: 1rem;
 }
@@ -149,12 +149,3 @@ body {
 
 
 /* nav-bar styling */
-
-.search {
-    border-radius: 25px;
-}
-
-.search-icon {
-    display: inline;
-    margin-right: 0.4rem;
-}

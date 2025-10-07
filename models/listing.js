@@ -2,12 +2,7 @@ const mongoose = require('mongoose');
 const Review = require("./review.js");
 const User = require("./user.js");
 const { number, required } = require('joi');
-main().then(() => { console.log("connnection made successsfully"); })
-    .catch(err => console.log(err));
 
-async function main() {
-    await mongoose.connect('mongodb://127.0.0.1:27017/wanderlust');
-}
 
 
 const listingSchema = new mongoose.Schema({
